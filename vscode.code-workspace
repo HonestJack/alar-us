@@ -1,0 +1,12 @@
+{
+  "folders": [
+	{
+		"name": "project-cpp",
+		"path": "."
+	}
+],
+  "settings": {
+    "prettier.disableLanguages": ["html"],
+    "workbench.colorCustomizations": {}
+  }
+}
