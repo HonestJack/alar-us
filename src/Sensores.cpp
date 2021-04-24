@@ -27,7 +27,7 @@ Conjunto_sensores::~Conjunto_sensores()
 {
 }
 
-void Conjunto_sensores::verifica_sensores()
+void Conjunto_sensores::verifica_sensores() // Lê os sensores
 {
   short i;
   for (i = 0; i < NUM_SENSORES; i++)
@@ -48,13 +48,26 @@ void Conjunto_sensores::verifica_sensores()
   }
 }
 
-bool Conjunto_sensores::algum_disparou()
-{
+bool Conjunto_sensores::algum_disparou() // Verifica se algum sensor foi acionado e se passou o tempo necessário
+{                                        // antes de acionar o alarme
     short i;
     for(i = 0; i < NUM_SENSORES; i++)
     {
         if(sensor[i].detectou &&
            timer->getTime() - sensor[i].tempo_da_deteccao > tempo_de_deteccao)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Conjunto_sensores::algum_achou() // Faz a mesma coisa que algum_disparou mas sem verificar se passou o tempo
+{
+    short i;
+    for(i = 0; i < NUM_SENSORES; i++)
+    {
+        if(sensor[i].detectou)
         {
             return true;
         }

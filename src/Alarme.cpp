@@ -96,7 +96,10 @@ void Alarme::verificacao()
     if(esta_armado() &&
         timer->getTime() - tempo_em_que_foi_ligado > tempo_apos_ligar)
     {
-        sensores.verifica_sensores();
+        if(!sensores.algum_achou()) // Só verifica os sensores caso algum não tenha detectado ainda
+        {
+            sensores.verifica_sensores();
+        }
         if(sensores.algum_disparou())
         {
             tocar_alarme();
