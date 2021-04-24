@@ -34,11 +34,15 @@ void Conjunto_sensores::verifica_sensores()
   {
     if(PINC & (1 << i))
     {
-        PORTB |= (1 << 2); // Liga o Led de detecção
-        if(!sensor[i].detectou)
+        delay_ms(DELAY_DE_DETECCAO);
+        if (PINC & (1 << i)) // Lê o sensor novamente após 300ms
         {
-            sensor[i].tempo_da_deteccao = timer->getTime();
-            sensor[i].detectou = true;
+            timer->controla_pisca_led(true); // Liga pisca led
+            if(!sensor[i].detectou)
+            {
+                sensor[i].tempo_da_deteccao = timer->getTime();
+                sensor[i].detectou = true;
+            }
         }
     }
   }
@@ -52,7 +56,6 @@ bool Conjunto_sensores::algum_disparou()
         if(sensor[i].detectou &&
            timer->getTime() - sensor[i].tempo_da_deteccao > tempo_de_deteccao)
         {
-
             return true;
         }
     }

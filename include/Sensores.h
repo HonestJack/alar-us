@@ -6,6 +6,7 @@
 
 #define NUM_SENSORES 4
 #define TEMPO_DE_DETECCAO_DEFAULT 10  // Padrão 30
+#define DELAY_DE_DETECCAO 1000 // Tempo para não detectar alarmes falsos do sensor (em ms)
 
 class Sensor
 {
@@ -34,6 +35,5 @@ public:
 
     long tempo_de_deteccao;       // Quantos segundos após a detecção o alarme começa a tocar 
 };
-
 
 #endif

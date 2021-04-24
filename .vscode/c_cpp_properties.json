@@ -8,16 +8,16 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "c:/Users/mucar/trabalho-duds/project-cpp/include",
-                "c:/Users/mucar/trabalho-duds/project-cpp/src",
+                "c:/Users/mucar/alarme/alar-us/include",
+                "c:/Users/mucar/alarme/alar-us/src",
                 "C:/Users/mucar/.platformio/packages/tool-unity",
                 ""
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/mucar/trabalho-duds/project-cpp/include",
-                    "c:/Users/mucar/trabalho-duds/project-cpp/src",
+                    "c:/Users/mucar/alarme/alar-us/include",
+                    "c:/Users/mucar/alarme/alar-us/src",
                     "C:/Users/mucar/.platformio/packages/tool-unity",
                     ""
                 ]

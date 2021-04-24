@@ -9,8 +9,6 @@
 #define START_TIME    (START_HOUR*(long)3600 + START_MINUTE*(long)60 + START_SECOND)
 
 #define HORAS_EM_UM_DIA (long)24*60*60
-#define HORA_DE_ABRIR   (long)7*60*60
-#define HORA_DE_FECHAR  (long)23*60*60
 
 class Timer
 {
@@ -20,13 +18,12 @@ public:
 
   volatile long getTime();
   void setTime(long newTime);
-  bool is_open();
-  void detecta_alarme(short opcupantes);
+  void controla_pisca_led(bool sensor_disparado);
   
 // private:
   volatile static long counter;
   volatile static short aux_counter;
-  volatile bool static alarme;
+  volatile bool static pisca_led;
 };
 
 #endif

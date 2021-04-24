@@ -1,10 +1,6 @@
 #include "Admin.h"
 #include <stdlib.h>
 
-#define TEMPO_B (long)60*60*60
-#define TEMPO_P (long)10
-#define TEMPO_M 1
-#define TEMPO_X 0
 
 Admin::Admin(Display *d, Timer *t, Keyboard *k, Alarme *a, Simulacao_noturna *s, User *u1, User *u2)
 {
@@ -29,8 +25,8 @@ void Admin::start()
 //entrar_senha_admin(*display, *keyboard);
   do
   {
-    showOptions(pagina);
-    escolha = readOptionDigit(4);
+    mostra_opcao(pagina);
+    escolha = le_opcao(4);
     switch (escolha + 3*pagina)
     {
       case 1:
@@ -65,7 +61,7 @@ void Admin::start()
   display->clear();
 }
 
-char Admin::readOptionDigit(char num_options)
+char Admin::le_opcao(char num_options)
 {
   char key = 0;
   char option=0;
@@ -83,7 +79,7 @@ char Admin::readOptionDigit(char num_options)
   return option;
 }
 
-void Admin::showOptions(char pagina)
+void Admin::mostra_opcao(char pagina)
 {
   display->clear();
   switch (pagina)
@@ -171,7 +167,7 @@ bool Admin::retorna_on_off()
   bool escolha_bool;
   do
   {
-    escolha = readOptionDigit(2);
+    escolha = le_opcao(2);
     switch (escolha)
     {
     case 1:
@@ -225,7 +221,7 @@ void Admin::muda_horario()
     display->clear();
     display->print_duas_linhas("1-Hora 2-Min","3-Seg  4-Sair");
 
-    option = readOptionDigit(4);
+    option = le_opcao(4);
     switch (option)
     {
       case 1:
@@ -318,154 +314,3 @@ unsigned short Admin::le_tempo(char digitos)
 
   return key_value/pot(10,5-digitos);  
 }
-
-/*
-void Admin::verifica_usuario_presentes(short login)
-{
-  if (userdatabase->capacity()>0)
-  {
-    display->print_menu_deslizante(login);
-  }else
-  {
-    display->limpa_linha(2);
-    display->print("Nenhum Presente");
-  }
-
-}
-
-void Admin::menu_report()
-{ 
-  char option;
-  short i = 0, j;
-
-  short presentes[MAXIMO_USUARIOS_PRESENTES];
-
-  for (j = 0; j < QUANTIDADE_DE_USUARIOS; j++)
-  {
-    if(userdatabase->usuarios[j].esta_dentro)
-    {
-      presentes[i] = userdatabase->usuarios[j].login;
-      i++;
-    }
-  }
-  i = 0;
-
-  display->limpa_linha(2);
-  display->limpa_linha(1);
-  display->print("0");
-  display->print(userdatabase->capacity() + ASCII_SHIFT);
-  display->print(" Pres:  3-Exit");
-  
-  do
-  {
-    verifica_usuario_presentes(presentes[i]);
-    option = readOptionDigit(3);
-    switch (option)
-    {
-      case 1:
-        i++;
-        if (i >= userdatabase->capacity())
-        {
-          i = 0;
-        }     
-        break;
-      case 2:
-        i--;
-        if (i < 0)
-        {
-          i = userdatabase->capacity() - 1;
-        }  
-        break;
-      case 3:
-        break;
-    }
-  }while(option != 3);
-}
-
-
-void Admin::menu_troca_conta()
-{
-  char option;
-  short i = 0;
-
-  display->limpa_linha(2);
-  display->limpa_linha(1);
-  display->print("3-Exit  4-Select");
-
-  do
-  {
-    display->print_menu_deslizante(userdatabase->usuarios[i].login);
-    option = readOptionDigit(4);
-    switch (option)
-    {
-      case 1:
-        i++;
-        if (i >= QUANTIDADE_DE_USUARIOS)
-        {
-          i = 0;
-        }     
-        break;
-      case 2:
-        i--;
-        if (i < 0)
-        {
-          i = QUANTIDADE_DE_USUARIOS - 1;
-        }  
-        break;
-      case 3:
-        break;
-      case 4:
-        seleciona_troca(i);
-        option = 3;
-        break;
-    }
-  }while(option != 3);
-  
-
-}
-
-void Admin::seleciona_troca(short i)
-{
-  char option;
-  display->limpa_linha(1);
-  display->print_user(userdatabase->usuarios[i].login);
-  display->print(": ");
-  display->print(userdatabase->usuarios[i].plano);
-  display->limpa_linha(2);
-  display->print("1-B 2-P 3-M 4-X");
-  do
-  {
-    option = readOptionDigit(9);
-    switch (option)
-    {
-      case 1:
-                userdatabase->usuarios[i].tempo_restante = TEMPO_B;
-                userdatabase->usuarios[i].plano = 'B';
-                break;
-      case 2:
-                userdatabase->usuarios[i].tempo_restante = TEMPO_P;
-                userdatabase->usuarios[i].plano = 'P';
-                break;
-      case 3:
-                userdatabase->usuarios[i].tempo_restante = TEMPO_M;
-                userdatabase->usuarios[i].plano = 'M';
-                break;
-      case 4:
-                userdatabase->usuarios[i].tempo_restante = TEMPO_X;
-                userdatabase->usuarios[i].plano = 'X';
-                break;
-      default:
-                display->limpa_linha(1);
-                display->print("Wrong Plan!");
-                break;
-    }
-  } while (option < 1 || option > 4);
-  eeprom->escreve(i,userdatabase->usuarios[i].plano);
-  display->limpa_linha(1);
-  display->print("Troca confirmada");
-  display->limpa_linha(2);
-  display->print(eeprom->at(i));
-  delay_ms(2000);
-}
-
-*/

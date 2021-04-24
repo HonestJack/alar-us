@@ -31,16 +31,16 @@ void Alarme::printa_disparo()
     switch (alarme_que_disparou)
     {
         case 0:
-            display->print("sensor janela 1");
+            display->print("Sensor janela 1");
             break;
         case 1:
-            display->print("sensor janela 2");
+            display->print("Sensor janela 2");
             break;
         case 2:
-            display->print("sensor porta 1");
+            display->print("Sensor porta 1");
             break;
         case 3:
-            display->print("sensor porta 2");
+            display->print("Sensor porta 2");
             break;
         
         default:
@@ -57,7 +57,7 @@ void Alarme::desarmar_alarme()
     alarme_armado = false;
     display->clear();
     display->print("Alarme Desarmado");
-    
+    timer->controla_pisca_led(false); // Desliga indicador de disparo
     if(sensores.algum_disparou())
     {
         for(i = 0; i < NUM_SENSORES;i++)
@@ -69,7 +69,6 @@ void Alarme::desarmar_alarme()
                 alarme_que_disparou = i;
             }
         }
-        PORTB &= ~ (1 << 2); // Desliga indicador de disparo
         PORTB &= ~ (1 << 3); // Desliga o alarme sonoro
         printa_disparo();
     }

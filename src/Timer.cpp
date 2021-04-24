@@ -4,16 +4,12 @@
 
 volatile long Timer::counter;
 volatile short Timer::aux_counter;
-volatile bool Timer::alarme;
+volatile bool Timer::pisca_led;
 
-void Timer::detecta_alarme(short ocupantes)
+
+void Timer::controla_pisca_led(bool sensor_disparado)
 {
-	if(!is_open() && (ocupantes > 0))
-	{
-		alarme = true;
-	}else{
-		alarme = false;
-	}
+	pisca_led = sensor_disparado;
 }
 
 ISR (TIMER1_OVF_vect) // Interrup��o do timer respons�vel por contar os segundos
@@ -25,19 +21,18 @@ ISR (TIMER1_OVF_vect) // Interrup��o do timer respons�vel por contar os se
 	if(Timer::aux_counter == 4)
 	{
 		Timer::counter++;
-		PORTB ^= (1 << 6);
 		if(Timer::counter >= HORAS_EM_UM_DIA)
 		{
 			Timer::counter = 0;
 		}
 		Timer::aux_counter = 0;
 	}
-	if(Timer::alarme)
+	if(Timer::pisca_led)
 	{
-		PORTB ^=  (1 << 5);
+		PORTB ^=  (1 << 2);
 	}else
 	{
-		PORTB &= ~(1 << 5);
+		PORTB &= ~(1 << 2);
 	}
 	
 }
@@ -53,6 +48,7 @@ Timer::Timer(/* args */)
 	TIMSK1 = (1 << 0); // Ativa interrupt do Timer1
 	counter = (long)START_TIME;
 	aux_counter = 0;
+	pisca_led = false;
 }
 
 Timer::~Timer()
@@ -69,14 +65,3 @@ void Timer::setTime(long newTime)
 	counter = newTime;
 }
 
-bool Timer::is_open()
-{
-	if(counter <  HORA_DE_ABRIR ||
-	   counter >= HORA_DE_FECHAR)
-	{
-		return false;
-	}else
-	{
-		return true;
-	}
-}

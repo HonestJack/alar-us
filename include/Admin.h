@@ -19,8 +19,8 @@ public:
   void start();
 
 private:
-  char readOptionDigit(char num_options);
-  void showOptions(char pagina);
+  char le_opcao(char num_options);
+  void mostra_opcao(char pagina);
 
   bool retorna_on_off();
 
