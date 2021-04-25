@@ -1,6 +1,5 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <string.h>
 
 #include "Display.h"
 #include "Timer.h"
@@ -43,7 +42,7 @@ void rotina_do_relogio()
 
 void leitura_do_teclado(short &key_value)
 {
-  if(teclado.getIndex() == DIGIT_NUMBER)
+  if (teclado.retorna_indice() == DIGIT_NUMBER)
   {
     if(key_value == SENHA_ADMIN)
     {
@@ -65,7 +64,7 @@ void leitura_do_teclado(short &key_value)
       display.print_interfacie_padrao(timer.getTime());
       display.limpa_linha(2);
     }
-    teclado.resetIndex();
+    teclado.reseta_indice();
     key_value = 0; 
   }
 }
@@ -113,7 +112,7 @@ int main()
 {
   sei();
 
-  short key_value = 0;
+  short tecla_pressionada = 0;
 
   display.print_interfacie_padrao(START_TIME);
 
@@ -121,8 +120,8 @@ int main()
   {
     rotina_do_relogio();
 
-    key_value += teclado.reading(display, false);
-    leitura_do_teclado(key_value);
+    tecla_pressionada += teclado.lendo(display, false);
+    leitura_do_teclado(tecla_pressionada);
 
     alarme.verificacao(); // Verifica o estado do alarme
 

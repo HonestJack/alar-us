@@ -117,30 +117,10 @@ void Display::print_horario(long count)
   print(aux_1 - 10*aux_2 + ASCII_SHIFT);
 }
 
-void Display::print_tempo_restante(long tempo_restante)
-{
-  limpa_linha(2);
-  goto_display(2,1);
-  if (tempo_restante > 0)
-  {
-    print("Restam: ");
-    print_horario(tempo_restante);
-  }else{
-    print("Seu Tempo Acabou");
-  }  
-}
-
 void Display::print_relogio(long count)
 {
   goto_display(1,1);
   print_horario(count);
-}
-
-void Display::print_usuarios_presentes(short capacity)
-{
-  goto_display(1, 14);
-  print("U:");
-  print((capacity) + ASCII_SHIFT);
 }
 
 void Display::print_interfacie_padrao(long count)
@@ -155,24 +135,4 @@ void Display::print_duas_linhas(char string1[MAX_STRING_SIZE], char string2[MAX_
   print(string1);
   limpa_linha(2);
   print(string2);
-}
-
-void Display::print_user(short user)
-{
-  int i;
-  short aux;
-  for(i=0;i<DIGIT_NUMBER;i++)
-  {
-    aux = user/pot(10, DIGIT_NUMBER - i - 1);
-    print(aux + ASCII_SHIFT);
-    user = user - aux*pot(10, DIGIT_NUMBER - i - 1);
-  }
-}
-
-void Display::print_menu_deslizante(short user)
-{
-  limpa_linha(2);
-  print("<-2  ");
-  print_user(user);
-  print("   1->");
 }

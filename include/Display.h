@@ -18,7 +18,7 @@
 class Display
 {
 public:
-  Display(/* args */);
+  Display();
   ~Display();
 
   void print(char ch);
@@ -27,17 +27,13 @@ public:
   void print_interfacie_padrao(long int count);
   void clear();
   void limpa_linha(unsigned char linha);
-  void print_tempo_restante(long tempo_restante);
   void print_duas_linhas(char string1[MAX_STRING_SIZE], char string2[MAX_STRING_SIZE]);
   void print_horario(long count);
-  void print_user(short user);
-  void print_menu_deslizante(short user);
-
+  
 private:
   void clear_function();
   void lcd_function(char function);
   void print_relogio(long count);
-  void print_usuarios_presentes(short capacity);
 };
 
 #endif

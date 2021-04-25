@@ -67,8 +67,8 @@ char Admin::le_opcao(char num_options)
   {
     while (key==0)
     {
-      key = teclado->readRow();
-      teclado->nextRow();
+      key = teclado->le_coluna();
+      teclado->proxima_coluna();
     }
     option = key - '0';
     key = 0;
@@ -306,11 +306,11 @@ void Admin::muda_segundo()
 unsigned short Admin::le_tempo(char digitos)
 {
   unsigned short key_value = 0;
-  teclado->resetIndex();
+  teclado->reseta_indice();
   do
   {
-    key_value += teclado->reading(*display, true);
-  } while(teclado->getIndex() < digitos);
+    key_value += teclado->lendo(*display, true);
+  } while(teclado->retorna_indice() < digitos);
 
   return key_value/pot(10,5-digitos);  
 }

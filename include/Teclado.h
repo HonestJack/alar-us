@@ -25,26 +25,26 @@
 class Teclado
 {
 public:
-  Teclado(/* args */);
+  Teclado();
   ~Teclado();
 
-  unsigned short reading(Display display, bool admin_usando);
-  unsigned char getIndex();
-  void resetIndex();
+  unsigned short lendo(Display display, bool admin_usando);
+  unsigned char retorna_indice();
+  void reseta_indice();
 
-  char readRow();
-  void nextRow();
+  char le_coluna();
+  void proxima_coluna();
 
 private:
   void deboucing();
 
-  unsigned char m_value_index;
+  unsigned char indice;
 
-  unsigned char m_rowMaskNow;
-  unsigned char m_rowCount;
+  unsigned char mascara_coluna_atual;
+  unsigned char contador_de_coluna;
 
-  unsigned char m_columnsOld[4];
-  unsigned char m_columnNow;
+  unsigned char coluna_anterior[4];
+  unsigned char coluna_atual;
 };
 
 #endif

@@ -6,7 +6,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-Teclado::Teclado(/* args */)
+Teclado::Teclado()
 {
 	DDRD   |=  (1 << 0);   // PD.0 como saida - Linha 0 do teclado
   DDRD   |=  (1 << 1);   // PD.1 como saida - Linha 1 do teclado
@@ -21,40 +21,36 @@ Teclado::Teclado(/* args */)
   PORTD |=  (1 << 5); // Ativa pull up
   PORTD |=  (1 << 6); // Ativa pull up
 
-  // Init index
-  m_value_index = 0;
-
-  // Init row control variables
-  m_rowMaskNow = LINHA_0;
-  m_rowCount = 0;
+  indice = 0;
+  mascara_coluna_atual = LINHA_0;
+  contador_de_coluna = 0;
   PORTD &= ~(PORTD_LINES_MASK); 
-  PORTD |= m_rowMaskNow;
+  PORTD |= mascara_coluna_atual;
 
-  // Init column related variables
-  m_columnNow = PIND & PORTD_COLUMN_MASK;
+  coluna_atual = PIND & PORTD_COLUMN_MASK;
 
   for(int i=0; i<4; i++)
-    m_columnsOld[i] = PORTD_COLUMN_MASK;
+    coluna_anterior[i] = PORTD_COLUMN_MASK;
 }
 
 Teclado::~Teclado()
 {
 }
 
-char Teclado::readRow()
+char Teclado::le_coluna()
 {
-  m_columnNow = PIND & PORTD_COLUMN_MASK;
+  coluna_atual = PIND & PORTD_COLUMN_MASK;
   
   // checks if there is any change in the columns.
-  if(m_columnsOld[m_rowCount] != m_columnNow)
+  if(coluna_anterior[contador_de_coluna] != coluna_atual)
   {    
     deboucing();
-    m_columnNow = PIND & PORTD_COLUMN_MASK; // se comentar nao muda nada, sei la pq raios.
-    m_columnsOld[m_rowCount] = m_columnNow;
-    switch (m_columnNow)
+    coluna_atual = PIND & PORTD_COLUMN_MASK; // se comentar nao muda nada, sei la pq raios.
+    coluna_anterior[contador_de_coluna] = coluna_atual;
+    switch (coluna_atual)
     {
       case COLUNA_0: 
-        switch (m_rowMaskNow)
+        switch (mascara_coluna_atual)
         {
           case LINHA_0:
             return('1');
@@ -73,7 +69,7 @@ char Teclado::readRow()
         break;
 
       case COLUNA_1: 
-        switch (m_rowMaskNow)
+        switch (mascara_coluna_atual)
         {
           case LINHA_0:
             return('2');
@@ -92,7 +88,7 @@ char Teclado::readRow()
         }
         break;
       case COLUNA_2:
-        switch (m_rowMaskNow)
+        switch (mascara_coluna_atual)
         {
           case LINHA_0:
             return('3');
@@ -117,41 +113,41 @@ char Teclado::readRow()
   return 0;
 }
 
-void Teclado::nextRow()
+void Teclado::proxima_coluna()
 {
-  switch (m_rowMaskNow)
+  switch (mascara_coluna_atual)
   {
   case LINHA_0:
-    m_rowMaskNow = LINHA_1;
-    m_rowCount=1;
+    mascara_coluna_atual = LINHA_1;
+    contador_de_coluna=1;
     break;
   case LINHA_1:
-    m_rowMaskNow = LINHA_2;
-    m_rowCount=2;
+    mascara_coluna_atual = LINHA_2;
+    contador_de_coluna=2;
     break;
   case LINHA_2:
-    m_rowMaskNow = LINHA_3;
-    m_rowCount=3; 
+    mascara_coluna_atual = LINHA_3;
+    contador_de_coluna=3; 
     break;
   case LINHA_3:
-    m_rowMaskNow = LINHA_0;
-    m_rowCount=0;
+    mascara_coluna_atual = LINHA_0;
+    contador_de_coluna=0;
     break;
   default:
-    m_rowMaskNow = LINHA_0;
-    m_rowCount=0;
+    mascara_coluna_atual = LINHA_0;
+    contador_de_coluna=0;
     break;
   }
 
   PORTD &= ~(PORTD_LINES_MASK); 
-  PORTD |= m_rowMaskNow;
+  PORTD |= mascara_coluna_atual;
 }
 
 // Função que faz o deboucing
 void Teclado::deboucing()
 {
 	unsigned char count = 0,  
-                b_antigo = m_columnNow,
+                b_antigo = coluna_atual,
                 b_novo;
   
 	do
@@ -175,20 +171,20 @@ void Teclado::deboucing()
 	}while(count < BOUNCE);
 }
 
-unsigned short Teclado::reading(Display display, bool admin_usando)
+unsigned short Teclado::lendo(Display display, bool admin_usando)
 {
   unsigned char key;
   short value = 0;
-  key = readRow();
-  nextRow();
+  key = le_coluna();
+  proxima_coluna();
 
   if(key)
   {
-    display.goto_display(2, m_value_index+1);
-    if(m_value_index == 0)
+    display.goto_display(2, indice+1);
+    if(indice == 0)
     {
       display.limpa_linha(2);
-      display.goto_display(2, m_value_index+1);
+      display.goto_display(2, indice+1);
     }
     if(admin_usando)
     {
@@ -199,19 +195,19 @@ unsigned short Teclado::reading(Display display, bool admin_usando)
       display.print('*');
     }
     
-    value = (key - ASCII_SHIFT)*pot(10,(DIGIT_NUMBER - 1 - m_value_index));
-    m_value_index++;
+    value = (key - ASCII_SHIFT)*pot(10,(DIGIT_NUMBER - 1 - indice));
+    indice++;
   }
 
   return value;
 }
 
-unsigned char Teclado::getIndex()
+unsigned char Teclado::retorna_indice()
 {
-  return m_value_index;
+  return indice;
 }
 
-void Teclado::resetIndex()
+void Teclado::reseta_indice()
 {
-  m_value_index=0;
+  indice=0;
 }

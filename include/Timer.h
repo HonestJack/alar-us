@@ -13,14 +13,12 @@
 class Timer
 {
 public:
-  Timer(/* args */);
+  Timer();
   ~Timer();
 
   volatile long getTime();
   void setTime(long newTime);
   void controla_pisca_led(bool sensor_disparado);
-  
-// private:
   volatile static long counter;
   volatile static short aux_counter;
   volatile bool static pisca_led;

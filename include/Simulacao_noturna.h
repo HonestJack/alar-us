@@ -10,7 +10,7 @@
 class Simulacao_noturna
 {
 private:
-    /* data */
+
 public:
     Simulacao_noturna(Timer *t);
     ~Simulacao_noturna();

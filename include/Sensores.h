@@ -13,7 +13,7 @@ class Sensor
 private:
     
 public:
-    Sensor(/* args */);
+    Sensor();
     ~Sensor();
     long tempo_da_deteccao;
     bool detectou;

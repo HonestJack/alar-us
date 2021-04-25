@@ -8,7 +8,7 @@
 #include "Simulacao_noturna.h"
 #include "User.h"
 
-#define SENHA_ADMIN 1267
+#define SENHA_ADMIN 1267 //01267
 
 class Admin
 {
