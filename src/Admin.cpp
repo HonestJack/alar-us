@@ -83,13 +83,13 @@ void Admin::mostra_opcao(char pagina)
   switch (pagina)
   {
   case 0:
-    display->print_duas_linhas("1-Usuarios","2-Horario 3-Mais");
+    display->print_2("1-Usuarios","2-Horario 3-Mais");
     break;
   case 1:
-    display->print_duas_linhas("1-Ativacao Noite","2-Simul   3-Mais");
+    display->print_2("1-Ativacao Noite","2-Simul   3-Mais");
     break;
   case 2:
-    display->print_duas_linhas("1-Tempos","2-Sair    3-Mais");
+    display->print_2("1-Tempos","2-Sair    3-Mais");
     break;
   
   default:
@@ -218,7 +218,7 @@ void Admin::muda_horario()
   do
   {
     display->clear();
-    display->print_duas_linhas("1-Hora 2-Min","3-Seg  4-Sair");
+    display->print_2("1-Hora 2-Min","3-Seg  4-Sair");
 
     option = le_opcao(4);
     switch (option)

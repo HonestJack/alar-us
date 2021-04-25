@@ -129,7 +129,7 @@ void Display::print_interfacie_padrao(long count)
   print_relogio(count);
 }
 
-void Display::print_duas_linhas(char string1[MAX_STRING_SIZE], char string2[MAX_STRING_SIZE])
+void Display::print_2(char string1[MAX_STRING_SIZE], char string2[MAX_STRING_SIZE])
 {
   limpa_linha(1);
   print(string1);
