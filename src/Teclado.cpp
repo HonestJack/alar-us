@@ -1,4 +1,4 @@
-#include "Keyboard.h"
+#include "Teclado.h"
 
 
 #include "utils.h"
@@ -6,7 +6,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-Keyboard::Keyboard(/* args */)
+Teclado::Teclado(/* args */)
 {
 	DDRD   |=  (1 << 0);   // PD.0 como saida - Linha 0 do teclado
   DDRD   |=  (1 << 1);   // PD.1 como saida - Linha 1 do teclado
@@ -37,11 +37,11 @@ Keyboard::Keyboard(/* args */)
     m_columnsOld[i] = PORTD_COLUMN_MASK;
 }
 
-Keyboard::~Keyboard()
+Teclado::~Teclado()
 {
 }
 
-char Keyboard::readRow()
+char Teclado::readRow()
 {
   m_columnNow = PIND & PORTD_COLUMN_MASK;
   
@@ -117,7 +117,7 @@ char Keyboard::readRow()
   return 0;
 }
 
-void Keyboard::nextRow()
+void Teclado::nextRow()
 {
   switch (m_rowMaskNow)
   {
@@ -148,7 +148,7 @@ void Keyboard::nextRow()
 }
 
 // Função que faz o deboucing
-void Keyboard::deboucing()
+void Teclado::deboucing()
 {
 	unsigned char count = 0,  
                 b_antigo = m_columnNow,
@@ -175,7 +175,7 @@ void Keyboard::deboucing()
 	}while(count < BOUNCE);
 }
 
-unsigned short Keyboard::reading(Display display, bool admin_usando)
+unsigned short Teclado::reading(Display display, bool admin_usando)
 {
   unsigned char key;
   short value = 0;
@@ -206,12 +206,12 @@ unsigned short Keyboard::reading(Display display, bool admin_usando)
   return value;
 }
 
-unsigned char Keyboard::getIndex()
+unsigned char Teclado::getIndex()
 {
   return m_value_index;
 }
 
-void Keyboard::resetIndex()
+void Teclado::resetIndex()
 {
   m_value_index=0;
 }

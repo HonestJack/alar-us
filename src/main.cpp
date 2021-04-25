@@ -4,7 +4,7 @@
 
 #include "Display.h"
 #include "Timer.h"
-#include "Keyboard.h"
+#include "Teclado.h"
 #include "User.h"
 #include "utils.h"
 #include "Admin.h"
@@ -13,13 +13,13 @@
 #include "Simulacao_noturna.h"
 
 Display display;
-Timer timer; 
-Keyboard keyboard;
+Timer timer;
+Teclado teclado;
 
 Simulacao_noturna simulacao_noturna(&timer);
 Alarme alarme(&display, &timer);
 User usuario_1(34589), usuario_2(12390);
-Admin admin(&display, &timer, &keyboard, &alarme, &simulacao_noturna, &usuario_1, &usuario_2);
+Admin admin(&display, &timer, &teclado, &alarme, &simulacao_noturna, &usuario_1, &usuario_2);
 
 
 
@@ -43,7 +43,7 @@ void rotina_do_relogio()
 
 void leitura_do_teclado(short &key_value)
 {
-  if(keyboard.getIndex() == DIGIT_NUMBER)
+  if(teclado.getIndex() == DIGIT_NUMBER)
   {
     if(key_value == SENHA_ADMIN)
     {
@@ -65,7 +65,7 @@ void leitura_do_teclado(short &key_value)
       display.print_interfacie_padrao(timer.getTime());
       display.limpa_linha(2);
     }
-    keyboard.resetIndex();
+    teclado.resetIndex();
     key_value = 0; 
   }
 }
@@ -121,7 +121,7 @@ int main()
   {
     rotina_do_relogio();
 
-    key_value += keyboard.reading(display, false);
+    key_value += teclado.reading(display, false);
     leitura_do_teclado(key_value);
 
     alarme.verificacao(); // Verifica o estado do alarme

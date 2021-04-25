@@ -5,7 +5,7 @@
 #include "Timer.h"
 #include "Sensores.h"
 
-#define TEMPO_APOS_LIGAR_DEFAULT  10  // Padrão 90
+#define TEMPO_APOS_LIGAR_DEFAULT  90  // Padrão 90
 
 #define HORA_DE_INICIO_DA_ATIVACAO_AUTOMAICA (long)0*(long)60*(long)60
 #define HORA_DE_FIM_DA_ATIVACAO_AUTOMAICA    (long)6*(long)60*(long)60

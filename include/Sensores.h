@@ -5,8 +5,8 @@
 #include "Timer.h"
 
 #define NUM_SENSORES 4
-#define TEMPO_DE_DETECCAO_DEFAULT 10  // Padrão: 30
-#define DELAY_DE_DETECCAO 1000        // Tempo para não detectar alarmes falsos do sensor (em ms). Padrão: 300
+#define TEMPO_DE_DETECCAO_DEFAULT 30  // Padrão: 30
+#define DELAY_DE_DETECCAO 300        // Tempo para não detectar alarmes falsos do sensor (em ms). Padrão: 300
 
 class Sensor
 {

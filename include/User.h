@@ -3,7 +3,7 @@
 
 #include "Timer.h"
 #include "Display.h"
-#include "Keyboard.h"
+#include "Teclado.h"
 
 class User
 {

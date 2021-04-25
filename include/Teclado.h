@@ -1,7 +1,7 @@
 #include "Display.h"
 
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#ifndef TECLADO_H
+#define TECLADO_H
 
 #define PORTD_COLUMN_MASK 0x70 // 0b0111 0000 - Pega apenas as colunas do teclado
 
@@ -22,11 +22,11 @@
 #define BOUNCE 4
 
 
-class Keyboard
+class Teclado
 {
 public:
-  Keyboard(/* args */);
-  ~Keyboard();
+  Teclado(/* args */);
+  ~Teclado();
 
   unsigned short reading(Display display, bool admin_usando);
   unsigned char getIndex();

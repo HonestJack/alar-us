@@ -3,7 +3,7 @@
 
 #include "Timer.h"
 #include "Display.h"
-#include "Keyboard.h"
+#include "Teclado.h"
 #include "Alarme.h"
 #include "Simulacao_noturna.h"
 #include "User.h"
@@ -13,7 +13,7 @@
 class Admin
 {
 public:
-  Admin(Display *d, Timer *t, Keyboard *k, Alarme *a, Simulacao_noturna *s, User *u1, User *u2);
+  Admin(Display *d, Timer *t, Teclado *teclado, Alarme *a, Simulacao_noturna *s, User *u1, User *u2);
   ~Admin();
 
   void start();
@@ -37,7 +37,7 @@ private:
 
   Display *display;
 	Timer *timer;
-	Keyboard *keyboard;
+	Teclado *teclado;
   Alarme *alarme;
   Simulacao_noturna *simulacao_noturna;
   User *usuario_1;

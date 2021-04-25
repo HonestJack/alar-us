@@ -1,12 +1,11 @@
 #include "Admin.h"
 #include <stdlib.h>
 
-
-Admin::Admin(Display *d, Timer *t, Keyboard *k, Alarme *a, Simulacao_noturna *s, User *u1, User *u2)
+Admin::Admin(Display *d, Timer *t, Teclado *k, Alarme *a, Simulacao_noturna *s, User *u1, User *u2)
 {
   display = d;
   timer = t;
-  keyboard = k;
+  teclado = k;
   alarme = a;
   simulacao_noturna = s;
   usuario_1 = u1;
@@ -22,7 +21,6 @@ void Admin::start()
 {
   char escolha;
   char pagina = 0;
-//entrar_senha_admin(*display, *keyboard);
   do
   {
     mostra_opcao(pagina);
@@ -69,8 +67,8 @@ char Admin::le_opcao(char num_options)
   {
     while (key==0)
     {
-      key = keyboard->readRow();
-      keyboard->nextRow();
+      key = teclado->readRow();
+      teclado->nextRow();
     }
     option = key - '0';
     key = 0;
@@ -308,11 +306,11 @@ void Admin::muda_segundo()
 unsigned short Admin::le_tempo(char digitos)
 {
   unsigned short key_value = 0;
-  keyboard->resetIndex();
+  teclado->resetIndex();
   do
   {
-    key_value += keyboard->reading(*display, true);
-  } while(keyboard->getIndex() < digitos);
+    key_value += teclado->reading(*display, true);
+  } while(teclado->getIndex() < digitos);
 
   return key_value/pot(10,5-digitos);  
 }
