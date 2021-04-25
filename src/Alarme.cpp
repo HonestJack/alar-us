@@ -55,10 +55,12 @@ void Alarme::printa_disparo()
 void Alarme::desarmar_alarme()
 {
     short i;
+    bool disparou = false;
     alarme_armado = false;
     display->clear();
     display->print("Alarme Desarmado");
     timer->controla_pisca_led(false); // Desliga indicador de disparo
+    
     for(i = 0; i < NUM_SENSORES;i++)
     {
         if(sensores.sensor[i].detectou)
@@ -68,12 +70,13 @@ void Alarme::desarmar_alarme()
             {
                 tempo_que_disparou = sensores.sensor[i].tempo_da_deteccao;
                 alarme_que_disparou = i;
+                disparou = true;
             }
         }
     }
-    if (sensores.algum_disparou())
+    if (disparou)
     {
-        PORTB &= ~ (1 << 3); // Desliga o alarme sonoro
+        PORTB &= ~(1 << 3); // Desliga o alarme sonoro
         printa_disparo();
     }
 }
