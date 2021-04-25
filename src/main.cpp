@@ -73,10 +73,23 @@ void leitura_do_teclado(short &key_value)
 void rotina_de_ativacao_noturna()
 {
   if(timer.getTime() < HORA_DE_FIM_DA_ATIVACAO_AUTOMAICA && // Ativação noturna automática
-     !alarme.esta_armado() &&
-     alarme.ativacao_noturna_habilitada)
+     alarme.ativacao_noturna_habilitada &&   // Ativação está habilitada pelo admin
+     !alarme.ocorreu_ativacao_noturna)       // Primeira ocorrência do ativação
   {
-    alarme.trocar_estado();
+    alarme.ocorreu_ativacao_noturna = true;
+    if(!alarme.esta_armado())
+    {
+      alarme.trocar_estado();
+    }
+  }
+  if (timer.getTime() > HORA_DE_FIM_DA_ATIVACAO_AUTOMAICA &&
+      alarme.ocorreu_ativacao_noturna)
+  {
+    alarme.ocorreu_ativacao_noturna = false;
+    if(alarme.esta_armado())  // Desativação noturna automática
+    {
+      alarme.trocar_estado();
+    }
   }
 }
 

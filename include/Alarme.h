@@ -30,6 +30,7 @@ public:
     void tocar_alarme();
 
     bool ativacao_noturna_habilitada;
+    bool ocorreu_ativacao_noturna;
     long tempo_que_disparou;
     long tempo_apos_ligar;        // Quantos segundos após a ativação do sistema o usuário tem para sair (sensores começam a funcionar)
     long tempo_em_que_foi_ligado; // Tempo no qual o sistema foi ativado

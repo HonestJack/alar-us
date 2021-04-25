@@ -159,6 +159,7 @@ void Admin::des_habilita_simulacao()
   display->goto_display(2,1);
   display->print("confirmada");
   delay_ms(1000);
+  simulacao_noturna->tempo_aux_simulacao = 0;
 }
 
 bool Admin::retorna_on_off()
@@ -237,7 +238,8 @@ void Admin::muda_horario()
         break;
     }
   }while(option != 4);
-
+  simulacao_noturna->tempo_aux_simulacao = 0; // reseta o tempo da simulação caso o horário mude
+  alarme->tempo_em_que_foi_ligado = timer->getTime();
 }
 
 void Admin::muda_hora()

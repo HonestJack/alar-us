@@ -6,6 +6,7 @@ Alarme::Alarme(Display *d, Timer *t)
     timer = t;
     sensores.timer = t;
     ativacao_noturna_habilitada = true;
+    ocorreu_ativacao_noturna = false;
     tempo_apos_ligar  = TEMPO_APOS_LIGAR_DEFAULT;
     
 }
@@ -58,17 +59,20 @@ void Alarme::desarmar_alarme()
     display->clear();
     display->print("Alarme Desarmado");
     timer->controla_pisca_led(false); // Desliga indicador de disparo
-    if(sensores.algum_disparou())
+    for(i = 0; i < NUM_SENSORES;i++)
     {
-        for(i = 0; i < NUM_SENSORES;i++)
+        if(sensores.sensor[i].detectou)
         {
-            if(sensores.sensor[i].detectou)
+            sensores.sensor[i].detectou = false;
+            if (timer->getTime() - sensores.sensor[i].tempo_da_deteccao > sensores.tempo_de_deteccao)
             {
-                sensores.sensor[i].detectou = false;
                 tempo_que_disparou = sensores.sensor[i].tempo_da_deteccao;
                 alarme_que_disparou = i;
             }
         }
+    }
+    if (sensores.algum_disparou())
+    {
         PORTB &= ~ (1 << 3); // Desliga o alarme sonoro
         printa_disparo();
     }
