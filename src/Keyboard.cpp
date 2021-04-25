@@ -190,7 +190,7 @@ unsigned short Keyboard::reading(Display display)
       display.limpa_linha(2);
       display.goto_display(2, m_value_index+1);
     }
-    display.print(key);
+    display.print('*');
     value = (key - ASCII_SHIFT)*pot(10,(DIGIT_NUMBER - 1 - m_value_index));
     m_value_index++;
   }
