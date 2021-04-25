@@ -175,7 +175,7 @@ void Keyboard::deboucing()
 	}while(count < BOUNCE);
 }
 
-unsigned short Keyboard::reading(Display display)
+unsigned short Keyboard::reading(Display display, bool admin_usando)
 {
   unsigned char key;
   short value = 0;
@@ -190,7 +190,15 @@ unsigned short Keyboard::reading(Display display)
       display.limpa_linha(2);
       display.goto_display(2, m_value_index+1);
     }
-    display.print('*');
+    if(admin_usando)
+    {
+      display.print(key);
+    }
+    else
+    {
+      display.print('*');
+    }
+    
     value = (key - ASCII_SHIFT)*pot(10,(DIGIT_NUMBER - 1 - m_value_index));
     m_value_index++;
   }

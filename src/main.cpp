@@ -108,7 +108,7 @@ int main()
   {
     rotina_do_relogio();
 
-    key_value += keyboard.reading(display);
+    key_value += keyboard.reading(display, false);
     leitura_do_teclado(key_value);
 
     alarme.verificacao(); // Verifica o estado do alarme

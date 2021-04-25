@@ -309,7 +309,7 @@ unsigned short Admin::le_tempo(char digitos)
   keyboard->resetIndex();
   do
   {
-    key_value += keyboard->reading(*display);
+    key_value += keyboard->reading(*display, true);
   } while(keyboard->getIndex() < digitos);
 
   return key_value/pot(10,5-digitos);  

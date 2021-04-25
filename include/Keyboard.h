@@ -28,7 +28,7 @@ public:
   Keyboard(/* args */);
   ~Keyboard();
 
-  unsigned short reading(Display display);
+  unsigned short reading(Display display, bool admin_usando);
   unsigned char getIndex();
   void resetIndex();
 
